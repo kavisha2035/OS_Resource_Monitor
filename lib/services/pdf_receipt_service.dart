@@ -1,7 +1,5 @@
 // lib/services/pdf_receipt_service.dart
-
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -14,11 +12,9 @@ class PdfReceiptService {
   Future<void> generateAndPrintReceipt(Consignment consignment) async {
     final doc = pw.Document();
 
+    // Load fonts
     final font = await PdfGoogleFonts.anekLatinRegular();
     final boldFont = await PdfGoogleFonts.anekLatinBold();
-
-    final logoImageBytes = await rootBundle.load('assets/dtdc_logo.png');
-    final logoImage = pw.MemoryImage(logoImageBytes.buffer.asUint8List());
 
     doc.addPage(
       pw.Page(
@@ -28,7 +24,7 @@ class PdfReceiptService {
         build: (pw.Context context) {
           return pw.Column(
             children: [
-              _buildHeader(consignment, logoImage),
+              _buildHeader(consignment),
               _buildConsignorConsigneeSection(consignment),
               pw.Expanded(child: _buildMainContentSection(consignment)),
               _buildFooterSection(consignment),
@@ -66,7 +62,7 @@ class PdfReceiptService {
     );
   }
 
-  pw.Widget _buildHeader(Consignment consignment, pw.ImageProvider logo) {
+  pw.Widget _buildHeader(Consignment consignment) {
     return pw.SizedBox(
       height: 100,
       child: pw.Row(
@@ -77,22 +73,16 @@ class PdfReceiptService {
             child: pw.Container(
               decoration: pw.BoxDecoration(border: pw.Border.all()),
               padding: const pw.EdgeInsets.all(8),
-              child: pw.Row(
+              child: pw.Column(
+                mainAxisAlignment: pw.MainAxisAlignment.center,
+                crossAxisAlignment: pw.CrossAxisAlignment.start,
                 children: [
-                  pw.SizedBox(width: 80, height: 60, child: pw.Image(logo)),
-                  pw.SizedBox(width: 16),
-                  pw.Column(
-                    mainAxisAlignment: pw.MainAxisAlignment.center,
-                    crossAxisAlignment: pw.CrossAxisAlignment.start,
-                    children: [
-                      pw.Text(
-                        'DTDC Express Limited',
-                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-                      ),
-                      pw.Text(
-                        'Regd. Office No. 3, Victoria Road\nBengaluru - 560047',
-                      ),
-                    ],
+                  pw.Text(
+                    'Movers Express Limited',
+                    style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                  ),
+                  pw.Text(
+                    'Regd. Office No. 3, Victoria Road\nBengaluru - 560047',
                   ),
                 ],
               ),
@@ -199,7 +189,6 @@ class PdfReceiptService {
   }
 
   pw.Widget _buildMainContentSection(Consignment consignment) {
-    // Handling cases where 0 might mean "Not Applicable"
     final declaredValueText = consignment.DeclaredValue == 0
         ? 'Not Applicable'
         : consignment.DeclaredValue.toStringAsFixed(2);
@@ -220,6 +209,7 @@ class PdfReceiptService {
         pw.Text('AWB No: ${consignment.AWBNumber}'),
       ],
     );
+
     return pw.Row(
       crossAxisAlignment: pw.CrossAxisAlignment.stretch,
       children: [
@@ -296,7 +286,6 @@ class PdfReceiptService {
                 flex: 3,
                 child: pw.Container(
                   padding: const pw.EdgeInsets.all(8),
-                  // decoration: pw.BoxDecoration(border: pw.Border.all()),
                   child: column,
                 ),
               ),
@@ -344,8 +333,8 @@ class PdfReceiptService {
       height: 35,
       child: pw.Row(
         children: [
-          _buildFooterCell('https://www.dtdc.in', 1, isUrl: true),
-          _buildFooterCell('customersupport@dtdc.com', 1),
+          _buildFooterCell('https://www.movers.in', 1, isUrl: true),
+          _buildFooterCell('customersupport@movers.com', 1),
           _buildFooterCell('+91-9606911811', 1),
           _buildFooterCell(
             'Amount collected (in Rs.): ${consignment.TotalAmount.toStringAsFixed(2)}',
