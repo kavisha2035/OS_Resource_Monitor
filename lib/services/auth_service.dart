@@ -7,10 +7,10 @@ class AuthService {
   Future<bool> login(String username, String password) async {
     await Future.delayed(const Duration(seconds: 1));
     if (username == _correctUsername && password == _correctPassword) {
-      debugPrint("Authentication successful.");
+      debugPrint("Authentication successful. You are going to login.");
       return true;
     } else {
-      debugPrint("Authentication failed.");
+      debugPrint("Authentication failed. Try Again.");
       return false;
     }
   }
