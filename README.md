@@ -110,6 +110,14 @@ lib/
 
 ##  Preview
 
+![Alt text](assets/img_11.jpg)
+Authorization screen 
+![Alt text](assets/img_22.jpg)
+Main screen
+![Alt text](assets/img_44.jpg)
+New Consignment creating screen
+![Alt text](assets/img_55.jpg)
+Adding new contacts screen
 
 
 ---
