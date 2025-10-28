@@ -137,4 +137,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-**GitHub Repository:** [kavisha2035/Courier-Billing-Desktop-App](https://github.com/kavisha2035/Courier-Billing-Desktop-App)
+**GitHub Repository:** [kavisha2035/Courier-Billing-Desktop-App](https://github.com/kavisha2035/OS_Resource_Monitor)
